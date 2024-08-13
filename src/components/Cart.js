@@ -1,11 +1,24 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { CartContext } from '../context/CartContext';
+import { Container, ListGroup, Button } from 'react-bootstrap';
 
 function Cart() {
+  const { cart, removeFromCart } = useContext(CartContext); // Accede al estado del carrito y la función para eliminar libros
+
   return (
-    <div>
-      <h1>Your Cart</h1>
-      {/* Aquí se puede agregar más lógica para mostrar el carrito */}
-    </div>
+    <Container>
+      <h2>Your Cart</h2>
+      <ListGroup>
+        {cart.map((book, index) => (
+          <ListGroup.Item key={index}>
+            {book.title} - ${book.price}
+            <Button variant="danger" onClick={() => removeFromCart(book.id)} style={{ float: 'right' }}>
+              Remove
+            </Button>
+          </ListGroup.Item>
+        ))}
+      </ListGroup>
+    </Container>
   );
 }
 
